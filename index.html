@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<title>Eternal Formatter</title>
+</head>
+<body>
+<p>
+    Use this tool to properly format your Eternal card game deck lists for posting on <a href="https://reddit.com/r/EternalCardGame">/r/EternalCardGame</a>.
+</p>
+<p>
+    Your Eternal decklist:<br>
+    <textarea id="inbox" style="width: 300px"></textarea>
+</p>
+<p>
+    <button id="formatButton">Format for reddit</button>
+    <button id="copyButton" style="display: none">Copy output to clipboard</button>
+<p>
+<p id="feedback"></p>
+<div id="outputArea" style="display: none">
+  <p>
+      Output:<br>
+      <textarea id="outbox" style="width: 300px"></textarea>
+  </p>
+</div>
+<script>
+document.getElementById('formatButton').addEventListener('click', function() {
+    var input = document.getElementById('inbox').value;
+    document.getElementById('outbox').value = input.replace(/$/mg, "  ");
+    document.getElementById('outbox').select();
+    document.getElementById('copyButton').style.display = "inline-block";
+    document.getElementById('outputArea').style.display = "block";
+    document.getElementById('feedback').innerHTML = '';
+});
+document.getElementById('copyButton').addEventListener('click', function() {
+	try {
+    document.getElementById('outbox').select();
+  	document.execCommand('copy');
+    document.getElementById('feedback').innerHTML = '<span style="color: #118738">✓ Copied</span>';
+  } catch (err) {
+    document.getElementById('feedback').innerHTML = 'Couldn\'t copy...just select select all and copy manually.';
+  }
+});
+</script>
+</body>
+</html>

@@ -1,44 +1,58 @@
 <!doctype html>
 <html>
 <head>
-<title>Eternal Formatter</title>
+<title>Eternal Formatter for Reddit</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 </head>
 <body>
-<p>
-    Use this tool to properly format your Eternal card game deck lists for posting on <a href="https://reddit.com/r/EternalCardGame">/r/EternalCardGame</a>.
-</p>
-<p>
-    Your Eternal decklist:<br>
-    <textarea id="inbox" style="width: 300px"></textarea>
-</p>
-<p>
-    <button id="formatButton">Format for reddit</button>
-    <button id="copyButton" style="display: none">Copy output to clipboard</button>
-<p>
-<p id="feedback"></p>
-<div id="outputArea" style="display: none">
-  <p>
-      Output:<br>
-      <textarea id="outbox" style="width: 300px"></textarea>
-  </p>
+<div class="container-fluid" style="max-width: 600px">
+  <div class="row">
+    <div class="col py-5">
+      <h1>Eternal Formatter for Reddit</h1>
+      <p>
+        Use this tool to properly format your <a href="http://eternalcardgame.com/">Eternal Card Game</a> deck lists for posting on <a href="https://reddit.com/r/EternalCardGame">/r/EternalCardGame</a>.
+      </p>
+      <p>
+        Your Eternal decklist:<br>
+        <textarea id="inbox" style="width: 300px"></textarea>
+      </p>
+      <p>
+        <button class="btn btn-primary" id="formatButton">Format for Reddit</button>
+      </p>
+      <div id="outputArea" style="display: none">
+        <p>
+          Output:<br>
+          <textarea id="outbox" style="width: 300px"></textarea>
+        </p>
+      </div>
+      <p>
+        <button class="btn btn-primary" id="copyButton" style="display: none">Copy output to clipboard</button>
+      </p>
+      <div id="feedback" style="display: none"></div>
+    </div>
+  </div>
 </div>
 <script>
 document.getElementById('formatButton').addEventListener('click', function() {
-    var input = document.getElementById('inbox').value;
-    document.getElementById('outbox').value = input.replace(/$/mg, "  ");
-    document.getElementById('outbox').select();
-    document.getElementById('copyButton').style.display = "inline-block";
-    document.getElementById('outputArea').style.display = "block";
-    document.getElementById('feedback').innerHTML = '';
+  var input = document.getElementById('inbox').value;
+  document.getElementById('outbox').value = input.replace(/$/mg, "  ");
+  document.getElementById('outbox').select();
+  document.getElementById('copyButton').style.display = "inline-block";
+  document.getElementById('outputArea').style.display = "block";
+  document.getElementById('feedback').innerHTML = '';
+  document.getElementById('feedback').className = '';
 });
 document.getElementById('copyButton').addEventListener('click', function() {
-	try {
+  try {
     document.getElementById('outbox').select();
-  	document.execCommand('copy');
+    document.execCommand('copy');
+    document.getElementById('feedback').classList.add('alert', 'alert-success');
     document.getElementById('feedback').innerHTML = '<span style="color: #118738">✓ Copied</span>';
   } catch (err) {
+    document.getElementById('feedback').classList.add('alert', 'alert-danger');
     document.getElementById('feedback').innerHTML = 'Couldn\'t copy...just select select all and copy manually.';
   }
+  document.getElementById('feedback').style.display = "block";
 });
 </script>
 </body>
